@@ -11,6 +11,8 @@
   },
   "devDependencies": {
     "@jsdevtools/coverage-istanbul-loader": "3.0.5",
+    "@nativescript/android": "8.5.0",
+    "@nativescript/ios": "8.5.0",
     "@nativescript/types": "~8.5.0",
     "@nativescript/webpack": "~5.0.14",
     "@types/jasmine": "4.3.1",
