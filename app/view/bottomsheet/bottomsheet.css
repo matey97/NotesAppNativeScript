@@ -1,0 +1,14 @@
+.input-field {
+    border-radius: 5;
+    border-width: 5px;
+    border-color: black;
+    background-color: white;
+    padding: 5;
+}
+
+.button {
+    border-radius: 5;
+    padding: 10;
+    font-size: 18;
+    font-weight: bold;
+}
