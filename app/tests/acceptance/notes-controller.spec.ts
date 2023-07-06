@@ -3,9 +3,13 @@ import { NotesController } from "~/controller/notes-controller";
 import { LocalRepository } from "~/data/local/repository";
 import { firstValueFrom } from "rxjs";
 import { EmptyTitleError } from "~/errors/empty-title";
+import { CouchBase } from "@triniwiz/nativescript-couchbase";
+
+const DB_NAME = "test-db";
 
 describe("Notes controller acceptance tests", () => {
 
+  let database: CouchBase;
   let notesRepository: NotesRepository;
   let notesController: NotesController;
 
@@ -14,7 +18,8 @@ describe("Notes controller acceptance tests", () => {
   const description1 = "Test description 1";
 
   beforeEach(() => {
-    notesRepository = new LocalRepository();
+    database = new CouchBase(DB_NAME);
+    notesRepository = new LocalRepository(database);
     notesController = new NotesController(notesRepository);
   });
 
