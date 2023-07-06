@@ -1,8 +1,9 @@
 import { NotesRepository } from "~/data/notes-repository";
 import { NotesController } from "~/controller/notes-controller";
 import { LocalRepository } from "~/data/local/repository";
-import { Observable } from "rxjs";
+import { firstValueFrom, Observable } from "rxjs";
 import { EmptyTitleError } from "~/errors/empty-title";
+import { Note } from "~/data/note";
 
 describe("NotesController integration tests", () => {
 
@@ -10,8 +11,26 @@ describe("NotesController integration tests", () => {
   let notesController: NotesController;
 
   const emptyTitle = "";
+  const id1 = "id1";
   const title1 = "Test title 1";
   const description1 = "Test description 1";
+  const id2 = "id2";
+  const title2 = "Test title 2";
+  const description2 = "Test description 2";
+
+  const note1: Note = {
+    id: id1,
+    title: title1,
+    description: description1,
+    date: 0
+  };
+
+  const note2: Note = {
+    id: id2,
+    title: title2,
+    description: description2,
+    date: 0
+  };
 
   beforeEach(() => {
     notesRepository = new LocalRepository();
@@ -46,6 +65,42 @@ describe("NotesController integration tests", () => {
     expect(() => notesController.createNote(emptyTitle, description1))
       .toThrow(new EmptyTitleError()); // Then: se lanza la excepción EmptyTitleError
     expect(notesRepository.insert).not.toHaveBeenCalled();
+  });
+
+  it("H02_E01", async () => {
+    // Given: no hay ninguna nota
+    spyOn(notesRepository, "getNoteChanges").and.returnValue(
+      new Observable((subscriber) => subscriber.next([]))
+    );
+
+    // When: se consultan las notas
+    const notes = await firstValueFrom(notesController.getNotes());
+
+    // Then: se obtiene una lista vacía
+    expect(notes.length).toBe(0);
+  });
+
+  it("H02_E02", async () => {
+    // Given: hay varias notas almacenadas
+    spyOn(notesRepository, "getNoteChanges").and.returnValue(
+      new Observable((subscriber) => subscriber.next([
+        note1, note2
+      ]))
+    );
+
+    // When: se consultan las notas
+    const notes = await firstValueFrom(notesController.getNotes());
+
+    // Then: se obtiene una lista con las notas almacenadas
+    expect(notes.length).toBe(2);
+    expect(notes[0]).toEqual(jasmine.objectContaining({
+      title: title1,
+      description: description1
+    }));
+    expect(notes[1]).toEqual(jasmine.objectContaining({
+      title: title2,
+      description: description2
+    }));
   });
 
   afterEach(() => {
