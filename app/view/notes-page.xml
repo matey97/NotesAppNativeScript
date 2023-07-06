@@ -1,0 +1,46 @@
+<Page xmlns="http://schemas.nativescript.org/tns.xsd"
+      xmlns:FAB="@nstudio/nativescript-floatingactionbutton"
+      navigatingTo="navigatingTo"
+>
+
+    <ActionBar>
+        <StackLayout orientation="horizontal">
+            <Label text="Notes App" fontSize="16" verticalAlignment="center" fontWeight="bold"/>
+            <Label text="&#xe26c;" class="mdi" />
+        </StackLayout>
+    </ActionBar>
+
+    <RootLayout>
+        <GridLayout rows="*" columns="*" visibility="{{ notes.length === 0 ? 'visible' : 'collapse' }}">
+            <Label text="¡No tienes ninguna nota!" class="h1" horizontalAlignment="center" verticalAlignment="center"/>
+        </GridLayout>
+
+        <StackLayout
+                visibility="{{ notes.length !== 0 ? 'visible' : 'collapse' }}"
+                style="margin: 10"
+        >
+            <ListView id="notesList" height="100%"
+                      items="{{ notes }}" itemTap="{{ onNoteTap }}"  loaded="{{ onListViewLoaded }}" separatorColor="Transparent">
+                <ListView.itemTemplate>
+                    <StackLayout id="{{ id }}">
+                        <StackLayout class="simple-card">
+                            <FlexboxLayout justifyContent="space-between">
+                                <Label text="{{ title }}" fontSize="20" fontWeight="bold" textWrap="true"/>
+                                <Label text="{{ date }}" flexShrink="0"/>
+                            </FlexboxLayout>
+                            <Label text="{{ description }}" textWrap="true"/>
+                        </StackLayout>
+                    </StackLayout>
+                </ListView.itemTemplate>
+            </ListView>
+        </StackLayout>
+
+        <FAB:fab
+                id="add-fab"
+                tap="{{ onAddNoteTap }}"
+                loaded="{{ onAddFabLoaded }}"
+                text="&#xe145;"
+                rippleColor="#f1f1f1"
+                class="fab-button mdi" />
+    </RootLayout>
+</Page>

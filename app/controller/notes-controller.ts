@@ -15,7 +15,7 @@ export class NotesController {
     return this.repository.getNoteChanges();
   }
 
-  createNote(title: string, description: string): void {
+  async createNote(title: string, description: string): Promise<void> {
     if (title.length === 0) {
       throw new EmptyTitleError();
     }

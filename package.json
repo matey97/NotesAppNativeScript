@@ -7,6 +7,7 @@
     "@nativescript/core": "~8.5.0",
     "@nativescript/theme": "~3.0.2",
     "@nativescript/unit-test-runner": "^3.0.4",
+    "@nstudio/nativescript-floatingactionbutton": "^3.0.4",
     "@triniwiz/nativescript-couchbase": "^1.4.0",
     "rxjs": "^7.8.1"
   },
