@@ -29,7 +29,7 @@ describe("Notes controller acceptance tests", () => {
     // Given: no hay ninguna nota
 
     // When: se intenta crear una nota con título y descripción
-    notesController.createNote(title1, description1);
+    await notesController.createNote(title1, description1);
 
     // Then: se almacena la nota con el titulo y descripción dados
     const notes = await firstValueFrom(notesController.getNotes());
@@ -44,8 +44,8 @@ describe("Notes controller acceptance tests", () => {
     // Given: no hay ninguna nota
 
     // When: se intenta crear una nota sin título
-    expect(() => notesController.createNote(emptyTitle, description1))
-      .toThrow(new EmptyTitleError()); // Then: se lanza la excepción EmptyTitleError
+    await expectAsync(notesController.createNote(emptyTitle, description1))
+      .toBeRejectedWith(new EmptyTitleError()); // Then: se lanza la excepción EmptyTitleError
   });
 
   it("H02_E01", async () => {
@@ -60,8 +60,8 @@ describe("Notes controller acceptance tests", () => {
 
   it("H02_E02", async () => {
     // Given: hay varias notas almacenadas
-    notesController.createNote(title1, description1);
-    notesController.createNote(title2, description2);
+    await notesController.createNote(title1, description1);
+    await notesController.createNote(title2, description2);
 
     // When: se consultan las notas
     const notes = await firstValueFrom(notesController.getNotes());

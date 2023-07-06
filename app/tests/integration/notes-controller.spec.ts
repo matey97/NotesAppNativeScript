@@ -39,14 +39,14 @@ describe("NotesController integration tests", () => {
     notesController = new NotesController(notesRepository);
   });
 
-  it("H01_E01", () => {
+  it("H01_E01", async () => {
     // Given: no hay ninguna nota
     spyOn(notesRepository, "getNoteChanges").and.returnValue(
       new Observable((subscriber) => subscriber.next([]))
     );
 
     // When: se intenta crear una nota con título y descripción
-    notesController.createNote(title1, description1);
+    await notesController.createNote(title1, description1);
 
     // Then: se almacena la nota con el titulo y descripción dados
     expect(notesRepository.insert).toHaveBeenCalledWith(jasmine.objectContaining({
@@ -62,8 +62,8 @@ describe("NotesController integration tests", () => {
     );
 
     // When: se intenta crear una nota sin título
-    expect(() => notesController.createNote(emptyTitle, description1))
-      .toThrow(new EmptyTitleError()); // Then: se lanza la excepción EmptyTitleError
+    await expectAsync(notesController.createNote(emptyTitle, description1))
+      .toBeRejectedWith(new EmptyTitleError()); // Then: se lanza la excepción EmptyTitleError
     expect(notesRepository.insert).not.toHaveBeenCalled();
   });
 
