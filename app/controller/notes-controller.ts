@@ -1,19 +1,26 @@
 import { NotesRepository } from "~/data/notes-repository";
 import { Observable } from "rxjs";
-import { Note } from "~/data/note";
+import { createNote, Note } from "~/data/note";
+import { getLocalRepository } from "~/data/local/repository";
+import { EmptyTitleError } from "~/errors/empty-title";
 
 export class NotesController {
 
   constructor(
-    private repository: NotesRepository
+    private repository: NotesRepository = getLocalRepository()
   ) {
   }
 
   getNotes(): Observable<Array<Note>> {
-    throw new Error("Unimplemented");
+    return this.repository.getNoteChanges();
   }
 
   createNote(title: string, description: string): void {
-    throw new Error("Unimplemented");
+    if (title.length === 0) {
+      throw new EmptyTitleError();
+    }
+
+    const note = createNote(title, description);
+    this.repository.insert(note);
   }
 }
