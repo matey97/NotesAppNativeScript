@@ -6,7 +6,8 @@
   "dependencies": {
     "@nativescript/core": "~8.5.0",
     "@nativescript/theme": "~3.0.2",
-    "@nativescript/unit-test-runner": "^3.0.4"
+    "@nativescript/unit-test-runner": "^3.0.4",
+    "rxjs": "^7.8.1"
   },
   "devDependencies": {
     "@jsdevtools/coverage-istanbul-loader": "3.0.5",
