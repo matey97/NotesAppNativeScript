@@ -42,7 +42,7 @@ describe("Notes controller acceptance tests", () => {
     // Given: no hay ninguna nota
 
     // When: se intenta crear una nota sin título
-    expect(notesController.createNote(emptyTitle, description1))
+    expect(() => notesController.createNote(emptyTitle, description1))
       .toThrow(new EmptyTitleError()); // Then: se lanza la excepción EmptyTitleError
   });
 

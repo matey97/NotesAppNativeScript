@@ -43,7 +43,7 @@ describe("NotesController integration tests", () => {
     );
 
     // When: se intenta crear una nota sin título
-    expect(notesController.createNote(emptyTitle, description1))
+    expect(() => notesController.createNote(emptyTitle, description1))
       .toThrow(new EmptyTitleError()); // Then: se lanza la excepción EmptyTitleError
     expect(notesRepository.insert).not.toHaveBeenCalled();
   });
