@@ -3,10 +3,10 @@
       navigatingTo="navigatingTo"
 >
 
-    <ActionBar>
+    <ActionBar class="primary">
         <StackLayout orientation="horizontal">
-            <Label text="Notes App" fontSize="16" verticalAlignment="center" fontWeight="bold"/>
-            <Label text="&#xe26c;" class="mdi" />
+            <Label text="Notes App" fontSize="16" verticalAlignment="center" fontWeight="bold" class="on-primary"/>
+            <Label text="&#xe26c;" class="mdi on-primary" />
         </StackLayout>
     </ActionBar>
 
@@ -23,12 +23,12 @@
                       items="{{ notes }}" itemTap="{{ onNoteTap }}"  loaded="{{ onListViewLoaded }}" separatorColor="Transparent">
                 <ListView.itemTemplate>
                     <StackLayout id="{{ id }}">
-                        <StackLayout class="simple-card">
+                        <StackLayout class="simple-card primary-container">
                             <FlexboxLayout justifyContent="space-between">
-                                <Label text="{{ title }}" fontSize="20" fontWeight="bold" textWrap="true"/>
-                                <Label text="{{ date }}" flexShrink="0"/>
+                                <Label text="{{ title }}" class="on-primary-container" fontSize="20" fontWeight="bold" textWrap="true"/>
+                                <Label text="{{ date }}" class="on-primary-container" flexShrink="0"/>
                             </FlexboxLayout>
-                            <Label text="{{ description }}" textWrap="true"/>
+                            <Label text="{{ description }}" class="on-primary-container" textWrap="true"/>
                         </StackLayout>
                     </StackLayout>
                 </ListView.itemTemplate>
@@ -41,6 +41,6 @@
                 loaded="{{ onAddFabLoaded }}"
                 text="&#xe145;"
                 rippleColor="#f1f1f1"
-                class="fab-button mdi" />
+                class="fab-button mdi primary on-primary" />
     </RootLayout>
 </Page>

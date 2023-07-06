@@ -1,6 +1,46 @@
 ﻿@import '@nativescript/theme/css/core.css';
 @import '@nativescript/theme/css/default.css';
 
+.primary {
+  background-color: #00629d;
+}
+
+.on-primary {
+  color: #ffffff;
+}
+
+.primary-container {
+  background-color: #cfe5ff;
+}
+
+.on-primary-container {
+  color: #001d33;
+}
+
+.secondary {
+  background-color: #474ad8;
+}
+
+.on-secondary {
+  color: #ffffff
+}
+
+.secondary-container {
+  background-color: #e1e0ff;
+}
+
+.on-secondary-container {
+  color: #04006d;
+}
+
+.error {
+  background-color: #ba1a1a;
+}
+
+.on-error {
+  color: #ffffff;
+}
+
 .mdi {
   font-family: "Material Icons", "MaterialIcons-Regular";
   font-size: 20;
