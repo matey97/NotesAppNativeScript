@@ -1,5 +1,7 @@
 import { Builder, CoreTypes, getRootLayout, RootLayoutOptions, View } from "@nativescript/core";
 import { BottomsheetViewModel } from "~/view/bottomsheet/bottomsheet-view-model";
+import { AddBottomsheetViewModel } from "~/view/bottomsheet/add/add-bottomsheet-view-model";
+import { EditBottomsheetViewModel } from "~/view/bottomsheet/edit/edit-bottomsheet-view-model";
 
 export class BottomSheetService {
 
@@ -20,7 +22,7 @@ export class BottomSheetService {
     onAddNote: (title: string, description: string) => void,
     onCancel: () => void
   ) {
-    const context = new BottomsheetViewModel(
+    const context = new AddBottomsheetViewModel(
       (title, description) => {
         this.closeBottomSheet();
         onAddNote(title, description);
@@ -30,6 +32,31 @@ export class BottomSheetService {
         onCancel();
       }
     );
+    this.openBottomSheet(context);
+  }
+
+  openEditNoteSheet(
+    title: string,
+    description: string,
+    onEditNote: (title: string, description: string) => void,
+    onCancel: () => void
+  ) {
+    const context = new EditBottomsheetViewModel(
+      title,
+      description,
+      (title, description) => {
+        this.closeBottomSheet();
+        onEditNote(title, description);
+      },
+      () => {
+        this.closeBottomSheet();
+        onCancel();
+      }
+    );
+    this.openBottomSheet(context);
+  }
+
+  private openBottomSheet(context: BottomsheetViewModel): void {
     this.bottomSheet.bindingContext = context;
     this.rootLayout.open(this.bottomSheet, options).catch((e) => console.log(e));
   }

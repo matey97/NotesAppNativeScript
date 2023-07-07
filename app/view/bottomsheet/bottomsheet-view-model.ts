@@ -1,11 +1,15 @@
 import { Observable } from "@nativescript/core";
 
-export class BottomsheetViewModel extends Observable {
+export abstract class BottomsheetViewModel extends Observable {
+
+  abstract headerText: string;
+  abstract cancelButtonText: string;
+  abstract confirmButtonText: string;
 
   title: string = "";
   description: string = "";
 
-  constructor(
+  protected constructor(
     private onConfirm: (title: string, description: string) => void,
     private onCancel: () => void
   ) {

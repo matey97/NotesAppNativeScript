@@ -1,12 +1,12 @@
 <GridLayout rows="auto" verticalAlignment="bottom" height="300"  borderRadius="25 25 0 0" class="secondary-container">
     <StackLayout padding="30">
-        <Label text="Nueva nota" fontSize="24" fontWeight="bold" horizontalAlignment="center" class="on-secondary-container"/>
+        <Label text="{{ headerText }}" fontSize="24" fontWeight="bold" horizontalAlignment="center" class="on-secondary-container"/>
         <TextField hint="Title" text="{{ title }}" class="input-field"/>
         <TextView hint="Description" text="{{ description }}" maxLines="5" class="input-field"/>
 
         <FlexboxLayout justifyContent="space-around" style="margin-top: 10">
-            <Button class="button error on-error" text="Cancelar" tap="{{ onCancelTap }}"/>
-            <Button class="button secondary on-secondary" text="Añadir nota" tap="{{ onConfirmTap }}"/>
+            <Button class="button error on-error" text="{{ cancelButtonText }}" tap="{{ onCancelTap }}"/>
+            <Button class="button secondary on-secondary" text="{{ confirmButtonText }}" tap="{{ onConfirmTap }}"/>
         </FlexboxLayout>
     </StackLayout>
 </GridLayout>
