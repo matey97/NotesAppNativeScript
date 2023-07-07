@@ -36,6 +36,7 @@ describe("NotesController integration tests", () => {
   beforeEach(() => {
     notesRepository = new LocalRepository();
     spyOn(notesRepository, "insert");
+    spyOn(notesRepository, "update");
 
     notesController = new NotesController(notesRepository);
   });

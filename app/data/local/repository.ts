@@ -37,7 +37,12 @@ export class LocalRepository implements NotesRepository {
   }
 
   update(id: string, title: string, description: string): void {
-    throw new Error("Unimplemented!");
+    this.db.updateDocument(
+      id,
+      {
+        title: title,
+        description: description
+      });
   }
 
   clear(): void {
