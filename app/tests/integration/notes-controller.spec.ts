@@ -4,6 +4,7 @@ import { LocalRepository } from "~/data/local/repository";
 import { firstValueFrom, Observable } from "rxjs";
 import { EmptyTitleError } from "~/errors/empty-title";
 import { Note } from "~/data/note";
+import { NoteNotFoundError } from "~/errors/note-not-found";
 
 describe("NotesController integration tests", () => {
 
@@ -101,6 +102,52 @@ describe("NotesController integration tests", () => {
       title: title2,
       description: description2
     }));
+  });
+
+  it("H03_E01", async () => {
+    // Given: hay varias notas almacenadas
+    spyOn(notesRepository, "getNoteChanges").and.returnValue(
+      new Observable((subscriber) => subscriber.next([
+        note1, note2
+      ]))
+    );
+
+    // When: se intenta cambiar el contenido de una nota
+    const newTitle = "New note title";
+    await notesController.updateNote(id2, newTitle, description2);
+
+    // Then: la nota se actualiza correctamente
+    expect(notesRepository.update).toHaveBeenCalledWith(id2, newTitle, description2);
+  });
+
+  it("H03_E02", async () => {
+    // Given: hay varias notas almacenada
+    spyOn(notesRepository, "getNoteChanges").and.returnValue(
+      new Observable((subscriber) => subscriber.next([
+        note1, note2
+      ]))
+    );
+
+    // When: se intenta cambiar el contenido de una nota con un título inválido
+    const newTitle = "";
+    await expectAsync(notesController.updateNote(id2, newTitle, description2))
+      .toBeRejectedWith(new EmptyTitleError()); // Then: se lanza la excepción EmptyTitleError
+    expect(notesRepository.update).not.toHaveBeenCalled();
+  });
+
+  it("H03_E03", async () => {
+    // Given: hay varias notas almacenadas
+    spyOn(notesRepository, "getNoteChanges").and.returnValue(
+      new Observable((subscriber) => subscriber.next([
+        note1, note2
+      ]))
+    );
+
+    // When: se intenta cambiar el contenido de una nota con un título inválido
+    const newTitle = "Other title";
+    await expectAsync(notesController.updateNote("", newTitle, description2))
+      .toBeRejectedWith(new NoteNotFoundError("")); // Then: se lanza la excepción NoteNotFoundError
+    expect(notesRepository.update).not.toHaveBeenCalled();
   });
 
   afterEach(() => {
