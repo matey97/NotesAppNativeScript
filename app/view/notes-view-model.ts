@@ -1,4 +1,4 @@
-import { Dialogs, EventData, Observable, ObservableArray } from '@nativescript/core'
+import { Dialogs, EventData, ItemEventData, ListView, Observable, ObservableArray } from '@nativescript/core'
 import { NoteUI } from "~/data/note-ui";
 import { Fab } from "@nstudio/nativescript-floatingactionbutton";
 import { NotesController } from "~/controller/notes-controller";
@@ -12,7 +12,11 @@ export class NotesViewModel extends Observable {
     return this._notes
   }
 
+  private noteSelected: number = undefined;
+  private notesListView: ListView;
+
   private addFab: Fab;
+  private editFab: Fab;
 
   constructor(
     private bottomSheetService = getBottomSheetService(),
@@ -26,8 +30,33 @@ export class NotesViewModel extends Observable {
       });
   }
 
+  onListViewLoaded(args: EventData) {
+    this.notesListView = <ListView>args.object;
+  }
+
   onAddFabLoaded(args: EventData) {
     this.addFab = <Fab>args.object;
+  }
+
+  onEditFabLoaded(args: EventData) {
+    this.editFab = <Fab>args.object;
+  }
+
+  onNoteTap(args: ItemEventData) {
+    const itemSelected = args.index;
+    if (itemSelected !== this.noteSelected) {
+      if (this.noteSelected !== undefined) {
+        this.notes.getItem(this.noteSelected).selected = false;
+      }
+      this.notes.getItem(itemSelected).selected = true;
+      this.noteSelected = itemSelected;
+    } else {
+      this.notes.getItem(this.noteSelected).selected = false;
+      this.noteSelected = undefined;
+    }
+
+    this.toggleFab(this.editFab, this.noteSelected !== undefined);
+    this.notesListView.refresh();
   }
 
   onAddNoteTap() {
@@ -46,7 +75,43 @@ export class NotesViewModel extends Observable {
       }
     )
 
+    this.unselectNote();
     this.toggleFab(this.addFab, false);
+  }
+
+  onEditSelectedNoteTap() {
+    const note = this.notes.getItem(this.noteSelected);
+    this.bottomSheetService.openEditNoteSheet(
+      note.title,
+      note.description,
+      (title, description) => {
+        this.toggleFab(this.addFab, true);
+        this.toggleFab(this.editFab, true);
+        this.notesController.updateNote(note.id, title, description)
+          .then(() => this.unselectNote())
+          .catch((e) => Dialogs.alert({
+            title: "¡Nota no actualizada!",
+            message: `Causa: ${e.message}`,
+            okButtonText: "Ok"
+          }));
+      },
+      () => {
+        this.toggleFab(this.addFab, true);
+        this.toggleFab(this.editFab, true);
+      }
+    )
+    this.toggleFab(this.addFab, false);
+    this.toggleFab(this.editFab, false);
+  }
+
+  private unselectNote() {
+    if (this.noteSelected === undefined)
+      return;
+
+    this.notes.getItem(this.noteSelected).selected = false;
+    this.noteSelected = undefined;
+    this.notesListView.refresh();
+    this.toggleFab(this.editFab, false);
   }
 
   private toggleFab(fab: Fab, show: boolean): void {

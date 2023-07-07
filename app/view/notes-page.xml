@@ -23,12 +23,12 @@
                       items="{{ notes }}" itemTap="{{ onNoteTap }}"  loaded="{{ onListViewLoaded }}" separatorColor="Transparent">
                 <ListView.itemTemplate>
                     <StackLayout id="{{ id }}">
-                        <StackLayout class="simple-card primary-container">
+                        <StackLayout class="{{ selected ? 'simple-card secondary-container' : 'simple-card primary-container' }}">
                             <FlexboxLayout justifyContent="space-between">
-                                <Label text="{{ title }}" class="on-primary-container" fontSize="20" fontWeight="bold" textWrap="true"/>
-                                <Label text="{{ date }}" class="on-primary-container" flexShrink="0"/>
+                                <Label text="{{ title }}" class="{{ selected ? 'on-secondary-container' : 'on-primary-container' }}" fontSize="20" fontWeight="bold" textWrap="true"/>
+                                <Label text="{{ date }}" class="{{ selected ? 'on-secondary-container' : 'on-primary-container' }}" flexShrink="0"/>
                             </FlexboxLayout>
-                            <Label text="{{ description }}" class="on-primary-container" textWrap="true"/>
+                            <Label text="{{ description }}" class="{{ selected ? 'on-secondary-container' : 'on-primary-container' }}" textWrap="true"/>
                         </StackLayout>
                     </StackLayout>
                 </ListView.itemTemplate>
@@ -42,5 +42,14 @@
                 text="&#xe145;"
                 rippleColor="#f1f1f1"
                 class="fab-button mdi primary on-primary" />
+
+        <FAB:fab
+                id="edit-fab"
+                isEnabled="false"
+                tap="{{ onEditSelectedNoteTap }}"
+                loaded="{{ onEditFabLoaded }}"
+                text="&#xe3c9;"
+                rippleColor="#f1f1f1"
+                class="fab-button action-update mdi secondary on-secondary" />
     </RootLayout>
 </Page>
