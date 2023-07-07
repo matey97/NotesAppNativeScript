@@ -45,6 +45,10 @@ export class LocalRepository implements NotesRepository {
       });
   }
 
+  delete(id: string): void {
+    throw new Error("Unimplemented");
+  }
+
   clear(): void {
     const notes = this.db.query({
       select: [],

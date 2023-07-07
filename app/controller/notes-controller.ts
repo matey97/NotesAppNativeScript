@@ -38,6 +38,10 @@ export class NotesController {
     this.repository.update(id, title, description);
   }
 
+  deleteNote(id: string): Promise<void> {
+    throw new Error("Unimplemented!");
+  }
+
   private async idExists(id: string): Promise<boolean> {
     const notes = await firstValueFrom(this.getNotes());
     return notes.find((note) => note.id === id) !== undefined;
