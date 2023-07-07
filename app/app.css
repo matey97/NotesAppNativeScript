@@ -70,3 +70,12 @@
   margin-right: 25;
   margin-bottom: 100;
 }
+
+.fab-button.action-delete {
+  height: 50;
+  width: 50;
+  border-radius: 25;
+  opacity: 0;
+  margin-right: 25;
+  margin-bottom: 165;
+}

@@ -51,5 +51,14 @@
                 text="&#xe3c9;"
                 rippleColor="#f1f1f1"
                 class="fab-button action-update mdi secondary on-secondary" />
+
+        <FAB:fab
+                id="delete-fab"
+                isEnabled="false"
+                tap="{{ onDeleteSelectedNoteTap }}"
+                loaded="{{ onDeleteFabLoaded }}"
+                text="&#xe92b;"
+                rippleColor="#f1f1f1"
+                class="fab-button action-delete mdi error on-error" />
     </RootLayout>
 </Page>

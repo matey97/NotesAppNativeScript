@@ -17,6 +17,7 @@ export class NotesViewModel extends Observable {
 
   private addFab: Fab;
   private editFab: Fab;
+  private deleteFab: Fab;
 
   constructor(
     private bottomSheetService = getBottomSheetService(),
@@ -42,6 +43,10 @@ export class NotesViewModel extends Observable {
     this.editFab = <Fab>args.object;
   }
 
+  onDeleteFabLoaded(args: EventData) {
+    this.deleteFab = <Fab>args.object;
+  }
+
   onNoteTap(args: ItemEventData) {
     const itemSelected = args.index;
     if (itemSelected !== this.noteSelected) {
@@ -55,7 +60,7 @@ export class NotesViewModel extends Observable {
       this.noteSelected = undefined;
     }
 
-    this.toggleFab(this.editFab, this.noteSelected !== undefined);
+    this.toggleActionFabs([this.editFab, this.deleteFab], this.noteSelected !== undefined);
     this.notesListView.refresh();
   }
 
@@ -85,8 +90,7 @@ export class NotesViewModel extends Observable {
       note.title,
       note.description,
       (title, description) => {
-        this.toggleFab(this.addFab, true);
-        this.toggleFab(this.editFab, true);
+        this.toggleActionFabs([this.addFab, this.editFab, this.deleteFab], true);
         this.notesController.updateNote(note.id, title, description)
           .then(() => this.unselectNote())
           .catch((e) => Dialogs.alert({
@@ -96,12 +100,17 @@ export class NotesViewModel extends Observable {
           }));
       },
       () => {
-        this.toggleFab(this.addFab, true);
-        this.toggleFab(this.editFab, true);
+        this.toggleActionFabs([this.addFab, this.editFab, this.deleteFab], true);
       }
     )
-    this.toggleFab(this.addFab, false);
-    this.toggleFab(this.editFab, false);
+    this.toggleActionFabs([this.addFab, this.editFab, this.deleteFab], false);
+  }
+
+  onDeleteSelectedNoteTap() {
+    const note = this.notes.getItem(this.noteSelected);
+    this.notesController.deleteNote(note.id)
+      .then(() => this.unselectNote())
+      .catch((e) => console.log(e));
   }
 
   private unselectNote() {
@@ -111,7 +120,7 @@ export class NotesViewModel extends Observable {
     this.notes.getItem(this.noteSelected).selected = false;
     this.noteSelected = undefined;
     this.notesListView.refresh();
-    this.toggleFab(this.editFab, false);
+    this.toggleActionFabs([this.editFab, this.deleteFab], false);
   }
 
   private toggleFab(fab: Fab, show: boolean): void {
@@ -120,5 +129,9 @@ export class NotesViewModel extends Observable {
       opacity: show ? 1 : 0,
       duration: 200
     });
+  }
+
+  private toggleActionFabs(fabs: Fab[], show: boolean) {
+    fabs.forEach((fab) => this.toggleFab(fab, show));
   }
 }
