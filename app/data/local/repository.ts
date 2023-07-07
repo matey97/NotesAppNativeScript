@@ -36,6 +36,10 @@ export class LocalRepository implements NotesRepository {
     this.db.createDocument(note, note.id);
   }
 
+  update(id: string, title: string, description: string): void {
+    throw new Error("Unimplemented!");
+  }
+
   clear(): void {
     const notes = this.db.query({
       select: [],

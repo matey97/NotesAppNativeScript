@@ -23,4 +23,8 @@ export class NotesController {
     const note = createNote(title, description);
     this.repository.insert(note);
   }
+
+  updateNote(id: string, title: string, description: string): Promise<void> {
+    throw new Error("Unimplemented!");
+  }
 }
