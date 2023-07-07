@@ -46,7 +46,7 @@ export class LocalRepository implements NotesRepository {
   }
 
   delete(id: string): void {
-    throw new Error("Unimplemented");
+    this.db.deleteDocument(id);
   }
 
   clear(): void {

@@ -38,8 +38,13 @@ export class NotesController {
     this.repository.update(id, title, description);
   }
 
-  deleteNote(id: string): Promise<void> {
-    throw new Error("Unimplemented!");
+  async deleteNote(id: string): Promise<void> {
+    const idExists = await this.idExists(id);
+    if (!idExists) {
+      throw new NoteNotFoundError(id);
+    }
+
+    this.repository.delete(id);
   }
 
   private async idExists(id: string): Promise<boolean> {
