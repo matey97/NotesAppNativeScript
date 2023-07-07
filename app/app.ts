@@ -5,7 +5,9 @@ purpose of the file is to pass control to the app’s first module.
 */
 
 import { Application } from '@nativescript/core'
+import Theme from "@nativescript/theme";
 
+Theme.setMode(Theme.Light);
 Application.run({ moduleName: 'app-root' })
 
 /*
