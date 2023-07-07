@@ -7,5 +7,6 @@ export function toNoteUI(note: Note): NoteUI {
     title: note.title,
     description: note.description,
     date: new Date(note.date).toLocaleDateString(),
+    selected: false
   }
 }
