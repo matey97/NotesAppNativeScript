@@ -6,7 +6,8 @@ implementación de historias de usuario, pruebas de aceptación y de integració
 Este es un proyecto de ejemplo para las asignaturas Diseño de Software (EI1039) y Paradigmas de
 Software (EI1048) del Grado en Ingeniería Informática de la Universitat Jaume I de Castellón, España.
 
-> **Note**: para obtener la especificación de las historias de usuario, así como otros proyectos de
+> [!NOTE]
+> Para obtener la especificación de las historias de usuario, así como otros proyectos de
 > ejemplo, visitar el siguiente [repositorio](https://github.com/matey97/NotesAppVersions).
 
 ## Tecnologías empleadas
@@ -30,10 +31,12 @@ una base de datos NoSQL.
 - Un IDE como Visual Studio Code o WebStorm. Ambos tienen extensiones para facilitar el desarrollo con NativeScript.
 - Dispositivo móvil Android o iOS físico o emulado (que el ordenador soporte virtualización).
 
-> **Note**: para compilar la aplicacion para iOS es necesario tener un Mac. La aplicación Android puede compilarse
+> [!IMPORTANT]
+> Para compilar la aplicacion para iOS es necesario tener un Mac. La aplicación Android puede compilarse
 > desde cualquier sistema operativo (Windows, Mac, Linux).
 
-> **Warning**: si surge cualquier problema, no dudéis en poneros en contacto.
+> [!TIP]
+> Si surge cualquier problema, no dudéis en poneros en contacto.
 
 ## Estructura del repositorio
 
@@ -77,7 +80,8 @@ Las pruebas pueden ejecutarse mediante el siguiente comando:
 ns test {android|ios}
 ```
 
-> **Note**: las pruebas se ejecutan en un dispositivo físico o virtual.
+> [!NOTE]
+> Las pruebas se ejecutan en un dispositivo físico o virtual.
 
 ## Autor
 
